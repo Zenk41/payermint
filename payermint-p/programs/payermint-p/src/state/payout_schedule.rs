@@ -1,7 +1,8 @@
 use anchor_lang::prelude::*;
 
 #[derive(InitSpace)]
-pub struct PayoutScheduleStruct {
+#[account]
+pub struct PayoutSchedule {
     interval: i64,
     next_payout_ts: i64,
     active: bool,
