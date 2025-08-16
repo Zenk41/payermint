@@ -12,6 +12,7 @@ import {
   getMint,
 } from "@solana/spl-token";
 import { expect } from "chai";
+import * as fs from "fs";
 
 describe("Payermint Protocol", () => {
   // Configure the client
@@ -23,6 +24,7 @@ describe("Payermint Protocol", () => {
   // Test accounts
   let globalConfig: web3.PublicKey;
   let treasury: web3.Keypair;
+  // const vaultOwnerSecretKey = JSON.parse(fs.readFileSync("turbin3-wallet.json","utf-8")); 
   let vaultOwner: web3.Keypair;
   let vaultAccount: web3.PublicKey;
   let member1: web3.Keypair;
@@ -45,6 +47,7 @@ describe("Payermint Protocol", () => {
     // Initialize test accounts
     treasury = web3.Keypair.generate();
     vaultOwner = web3.Keypair.generate();
+    // const vaultOwner = web3.Keypair.fromSecretKey(new Uint8Array(vaultOwnerSecretKey));
     member1 = web3.Keypair.generate();
     member2 = web3.Keypair.generate();
     member3 = web3.Keypair.generate();
