@@ -12,10 +12,10 @@ payermint_p = "7UtSF3QDsZYECrkwfAURFjXvkbvCetvByi8itj5MSen6"
 url = "https://api.apr.dev"
 
 [provider]
-# cluster = "localnet"
-# wallet = "~/.config/solana/id.json"
-cluster = "devnet"
-wallet = "turbin3-wallet.json"
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
+# cluster = "devnet"
+# wallet = "turbin3-wallet.json"
 
 
 
