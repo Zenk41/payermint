@@ -1,17 +1,15 @@
 pub mod create_vault;
-pub mod add_member;
-pub mod edit_member;
-pub mod claim_payment;
-pub mod configure_schedule;
-pub mod add_white_list;
+pub mod member;
 pub mod trigger_payout;
 pub mod deposit;
+pub mod initialize;
+pub mod process_scheduled;
+pub mod bulk_operation;
 
 pub use create_vault::*;
-pub use add_member::*;
-pub use edit_member::*;
-pub use claim_payment::*;
-pub use configure_schedule::*;
-pub use add_white_list::*;
+pub use member::*;
 pub use trigger_payout::*;
 pub use deposit::*;
+pub use initialize::*;
+pub use process_scheduled::*;
+pub use bulk_operation::*;

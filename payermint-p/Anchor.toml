@@ -12,8 +12,12 @@ payermint_p = "7UtSF3QDsZYECrkwfAURFjXvkbvCetvByi8itj5MSen6"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "localnet"
-wallet = "~/.config/solana/id.json"
+# cluster = "localnet"
+# wallet = "~/.config/solana/id.json"
+cluster = "devnet"
+wallet = "turbin3-wallet.json"
+
+
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
