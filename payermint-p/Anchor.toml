@@ -8,6 +8,9 @@ skip-lint = false
 [programs.localnet]
 payermint_p = "7UtSF3QDsZYECrkwfAURFjXvkbvCetvByi8itj5MSen6"
 
+[program.devnet]
+payermint_p = "4pS5k2QsTbpG1A4zBtVFwPpq94TcBQqrnyHN2jwiE58R"
+
 [registry]
 url = "https://api.apr.dev"
 
