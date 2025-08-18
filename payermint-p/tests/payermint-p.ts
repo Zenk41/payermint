@@ -24,7 +24,7 @@ describe("Payermint Protocol", () => {
   // Test accounts
   let globalConfig: web3.PublicKey;
   let treasury: web3.Keypair;
-  // const vaultOwnerSecretKey = JSON.parse(fs.readFileSync("turbin3-wallet.json","utf-8")); 
+  // const vaultOwnerSecretKey = JSON.parse(fs.readFileSync("turbin3-wallet.json","utf-8"));
   let vaultOwner: web3.Keypair;
   let vaultAccount: web3.PublicKey;
   let member1: web3.Keypair;
@@ -1074,7 +1074,6 @@ describe("Payermint Protocol", () => {
           .rpc();
         expect.fail("Should have thrown error");
       } catch (error) {
-        // The error might be "ConstraintHasOne" instead of "has_one"
         expect(error.message).to.satisfy(
           (msg: string) =>
             msg.includes("has_one") || msg.includes("ConstraintHasOne")
@@ -2780,7 +2779,7 @@ describe("Payermint Protocol", () => {
        */
       async executeSolClaim(
         code: string,
-        claimerKeypair: web3.Keypair, // We need theweb3.Keypair to sign
+        claimerKeypair: web3.Keypair,
         tempMemberAccount: web3.PublicKey,
         payrollBatch: web3.PublicKey
       ): Promise<{ success: boolean; txSignature?: string; error?: string }> {
@@ -2794,8 +2793,7 @@ describe("Payermint Protocol", () => {
             claimData.vaultId
           )!;
 
-          // Note: The on-chain program likely uses the 'member' account's 'wallet' field
-          // to verify against the signer. We assume the claimer is the signer now.
+          // Only the vault owner signs - member_wallet is just AccountInfo, not Signer
           const txSignature = await this.program.methods
             .processSolPayout(claimData.amount)
             .accountsStrict({
@@ -2804,14 +2802,11 @@ describe("Payermint Protocol", () => {
               member: tempMemberAccount,
               globalConfig: vaultConfig.globalConfig,
               treasury: vaultConfig.treasury,
-              memberWallet: claimerKeypair.publicKey, // This must be a signer
-              owner: vaultConfig.ownerKeypair.publicKey, // The vault owner is still required
+              memberWallet: claimerKeypair.publicKey, // This is just an AccountInfo, not a signer
+              owner: vaultConfig.ownerKeypair.publicKey,
               systemProgram: web3.SystemProgram.programId,
             })
-            // CRITICAL CHANGE: The claimer is now a signer!
-            // The vault owner might also need to sign depending on your program constraints.
-            // If it still fails, you may need to add vaultConfig.ownerKeypair to the signers array.
-            .signers([claimerKeypair])
+            .signers([vaultConfig.ownerKeypair]) // Only vault owner signs
             .rpc();
 
           // Mark code as used
@@ -2819,7 +2814,7 @@ describe("Payermint Protocol", () => {
           claimData.claimedBy = claimerKeypair.publicKey.toString();
           claimData.claimedAt = new Date();
 
-          // Cleanup (can be done separately by a cron job or the owner)
+          // Cleanup - remove the temporary member
           await this.program.methods
             .removeMember()
             .accountsStrict({
