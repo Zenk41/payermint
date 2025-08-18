@@ -15,7 +15,7 @@ pub use constants::*;
 pub mod helper;
 pub use helper::*;
 
-declare_id!("7UtSF3QDsZYECrkwfAURFjXvkbvCetvByi8itj5MSen6");
+declare_id!("Bbto3swCVRD1XuqU6ZbfCXfhQqzE5iKnEuf6AtgRxQ7Y");
 
 #[program]
 pub mod payermint_p {
